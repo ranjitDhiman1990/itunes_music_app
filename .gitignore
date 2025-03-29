@@ -5,10 +5,13 @@
 *.swp
 .DS_Store
 .atom/
+.build/
 .buildlog/
 .history
 .svn/
+.swiftpm/
 migrate_working_dir/
+.vscode
 
 # IntelliJ related
 *.iml
@@ -41,3 +44,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+*.xcscheme
+*.xcworkspacedata
+*.cc
+*.cmake
+*.xcscheme
+*.xcworkspacedata
+*.cc
+*.cmake
+macos/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme

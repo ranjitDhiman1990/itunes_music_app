@@ -52,8 +52,8 @@ class SongModel {
       'title': title,
       'artist': artist,
       'album': album,
-      'imageUrl': imgURL,
-      'previewUrl': previewURL,
+      'imgURL': imgURL,
+      'previewURL': previewURL,
     };
   }
 }

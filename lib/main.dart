@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itunes_music_app/app/app.dart';
 
 void main() {
-  runApp(const App());
+  runApp(const ProviderScope(child: App()));
 }

@@ -23,7 +23,8 @@ class SongRepositoryImpl implements SongRepository {
 
       final remoteSongs = await remoteDataSource.getTopSongs();
       await localDataSource.saveTopSongs(remoteSongs);
-      return localSongs.map((song) => song.toEntity()).toList();
+      final songs = await localDataSource.getTopSongs();
+      return songs.map((song) => song.toEntity()).toList();
     } catch (err) {
       throw err.toString();
     }

@@ -21,7 +21,7 @@ class AppDatabase {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE songs(
+      CREATE TABLE top_songs(
         id TEXT PRIMARY KEY,
         title TEXT,
         artist TEXT, 

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:itunes_music_app/core/database/app_database.dart';
+import 'package:itunes_music_app/core/services/audio_player_service.dart';
 import 'package:itunes_music_app/features/cart/data/datasources/local_data_source.dart'
     as cart_provider;
 import 'package:itunes_music_app/features/cart/data/repositories/cart_repository.dart';
@@ -44,4 +45,8 @@ final cartLocalDSProvider = Provider<cart_provider.LocalDataSource>((ref) {
 final cartRepositoryProvider = Provider((ref) {
   final localDataSource = ref.read(cartLocalDSProvider);
   return CartRepositoryImpl(localDataSource: localDataSource);
+});
+
+final audioPlayerServiceProvider = Provider<AudioPlayerService>((ref) {
+  return AudioPlayerService();
 });

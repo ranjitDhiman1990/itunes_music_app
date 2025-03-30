@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,8 +16,11 @@ void notificationTapBackground(NotificationResponse response) {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await AppPermissions.checkAndRequestNotificationPermission();
-  await NotificationService.initialize();
+  if (Platform.isAndroid) {
+    await AppPermissions.checkAndRequestNotificationPermission();
+    await NotificationService.initialize();
+  }
+
   runApp(
     const ProviderScope(
       child: App(),

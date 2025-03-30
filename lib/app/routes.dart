@@ -13,7 +13,12 @@ class AppRoutes {
       case songList:
         return MaterialPageRoute(builder: (_) => const SongListScreen());
       case songDetails:
-        return MaterialPageRoute(builder: (_) => const SongDetailsScreen());
+        final songId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => SongDetailsScreen(
+            songId: songId,
+          ),
+        );
       case cart:
         return MaterialPageRoute(builder: (_) => const CartScreen());
       default:

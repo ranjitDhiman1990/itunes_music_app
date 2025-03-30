@@ -18,7 +18,9 @@ class SongListScreen extends ConsumerWidget {
           Stack(
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  // TODO: Cart functionality
+                },
                 icon: const Icon(Icons.shopping_cart),
               ),
               const Positioned(
@@ -58,6 +60,7 @@ class SongListScreen extends ConsumerWidget {
                         Navigator.pushNamed(
                           context,
                           AppRoutes.songDetails,
+                          arguments: song.id,
                         );
                       },
                     );

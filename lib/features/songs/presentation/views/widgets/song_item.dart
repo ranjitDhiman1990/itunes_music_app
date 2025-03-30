@@ -32,11 +32,15 @@ class SongItemWidget extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                // TODO: Implement Play audion funtionality
+              },
               icon: const Icon(Icons.play_arrow),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                // TODO: Cart functionality
+              },
               icon: const Icon(Icons.add_shopping_cart),
             )
           ],

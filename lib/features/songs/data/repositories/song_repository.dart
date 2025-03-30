@@ -14,7 +14,7 @@ class SongRepositoryImpl implements SongRepository {
 
   @override
   Future<List<SongEntity>> getTopSongs() async {
-    /// Try to fetch from local DB first, if songs founf in local DB, the get it from there , otherwise get it from remote datasource(API Call)
+    /// Try to fetch from local DB first, if songs found in local DB, then get it from there , otherwise get it from remote datasource(API Call)
     try {
       final localSongs = await localDataSource.getTopSongs();
       if (localSongs.isNotEmpty) {

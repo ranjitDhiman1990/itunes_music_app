@@ -50,7 +50,8 @@ class _SongItemWidgetState extends ConsumerState<SongItemWidget> {
                 if (isCurrentSong && playerState.isPlaying) {
                   audioController.pause();
                 } else {
-                  audioController.play(widget.song.id, widget.song.previewURL!);
+                  audioController.play(widget.song.id, widget.song.previewURL!,
+                      widget.song.title ?? '');
                 }
               },
               icon: Icon((isCurrentSong && playerState.isPlaying)

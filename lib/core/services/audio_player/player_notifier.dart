@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:itunes_music_app/core/services/player_state.dart';
+import 'package:itunes_music_app/core/services/audio_player/player_state.dart';
 
 class PlayerNotifier extends StateNotifier<PlayerState> {
   PlayerNotifier() : super(const PlayerState());
@@ -10,6 +10,10 @@ class PlayerNotifier extends StateNotifier<PlayerState> {
 
   void pause() {
     state = state.copyWith(isPlaying: false);
+  }
+
+  void resume() {
+    state = state.copyWith(isPlaying: true);
   }
 
   void stop() {

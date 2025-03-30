@@ -93,7 +93,7 @@ class _SongDetailsScreenState extends ConsumerState<SongDetailsScreen> {
                     final audioController = ref.read(audioControllerProvider);
                     isPlaying
                         ? audioController.pause()
-                        : audioController.play(widget.songId, song.previewURL!);
+                        : audioController.play(widget.songId, song.previewURL!, song.title ?? '');
                   },
                 ),
               ],

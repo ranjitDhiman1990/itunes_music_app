@@ -13,11 +13,11 @@ class AudioPlayerService {
     }
   }
 
-  Future<void> pause(String url) async {
+  Future<void> pause() async {
     await _audioPlayer.pause();
   }
 
-  Future<void> stop(String url) async {
+  Future<void> stop() async {
     await _audioPlayer.stop();
     _playingURL = null;
   }

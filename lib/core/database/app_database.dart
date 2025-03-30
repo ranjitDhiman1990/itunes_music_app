@@ -34,7 +34,7 @@ class AppDatabase {
     await db.execute('''
       CREATE TABLE cart(
         songId TEXT PRIMARY KEY,
-        qty INTEGER,
+        quantity INTEGER,
         FOREIGN KEY (songId) REFERENCES songs(id) ON DELETE CASCADE
       )
     ''');

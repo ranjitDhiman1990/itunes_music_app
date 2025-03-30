@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itunes_music_app/core/utils/cart_utils.dart';
 import 'package:itunes_music_app/core/utils/common_imageview_widget.dart';
+import 'package:itunes_music_app/features/cart/presentation/view_models/cart_view_model.dart';
 import 'package:itunes_music_app/features/songs/presentation/view_models/song_view_model.dart';
 
 class SongDetailsScreen extends ConsumerWidget {
@@ -12,6 +14,7 @@ class SongDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final cartState = ref.watch(cartViewModel);
     final songState = ref.watch(songViewModel);
     final song = songState.songs.firstWhere((element) => element.id == songId);
 
@@ -53,10 +56,20 @@ class SongDetailsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {
-                  // TODO: Implement add to cart functionality
+                onPressed: () async {
+                  if (cartState.isInCart(songId)) {
+                    await CartUtils.showCartQuantityDialog(
+                        context: context, ref: ref, song: song);
+                  } else {
+                    await ref.read(cartViewModel.notifier).addToCart(songId);
+                    if (context.mounted) {
+                      CartUtils.showAddConfirmation(context, song);
+                    }
+                  }
                 },
-                child: const Text('Add to Cart'),
+                child: Text(cartState.isInCart(song.id)
+                    ? 'Remove from Cart'
+                    : 'Add to Cart'),
               ),
               if (song.previewURL != null) ...[
                 const SizedBox(height: 16),

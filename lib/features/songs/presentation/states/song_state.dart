@@ -22,4 +22,8 @@ class SongState {
       error: error ?? this.error,
     );
   }
+
+  Map<String, SongEntity> get songsMap {
+    return {for (var song in songs) song.id: song};
+  }
 }

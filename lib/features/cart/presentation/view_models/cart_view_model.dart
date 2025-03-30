@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itunes_music_app/core/providers/providers.dart';
+import 'package:itunes_music_app/core/utils/extensions.dart';
 import 'package:itunes_music_app/features/cart/domain/repositories/cart_repository.dart';
 import 'package:itunes_music_app/features/cart/presentation/states/cart_state.dart';
 
@@ -46,6 +47,18 @@ class CartViewModel extends StateNotifier<CartState> {
 
   Future<void> clearCart() async {
     await _repository.clearCart();
+    await getCartItems();
+  }
+
+  Future<void> toggleCartItem(String songId) async {
+    final existingItem =
+        state.cartItems.firstWhereOrNull((item) => item.songId == songId);
+
+    if (existingItem != null) {
+      await _repository.removeFromCart(songId);
+    } else {
+      await _repository.addToCart(songId);
+    }
     await getCartItems();
   }
 }

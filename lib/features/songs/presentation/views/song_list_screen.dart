@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itunes_music_app/app/routes.dart';
+import 'package:itunes_music_app/features/cart/presentation/view_models/cart_view_model.dart';
 import 'package:itunes_music_app/features/songs/presentation/view_models/song_view_model.dart';
 import 'package:itunes_music_app/features/songs/presentation/views/widgets/song_item.dart';
 
@@ -10,6 +11,7 @@ class SongListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final songState = ref.watch(songViewModel);
+    final cartState = ref.watch(cartViewModel);
 
     return Scaffold(
       appBar: AppBar(
@@ -19,25 +21,27 @@ class SongListScreen extends ConsumerWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  // TODO: Cart functionality
+                  Navigator.pushNamed(context, AppRoutes.cart);
                 },
                 icon: const Icon(Icons.shopping_cart),
               ),
-              const Positioned(
-                right: 8,
-                top: 8,
-                child: CircleAvatar(
-                  backgroundColor: Colors.red,
-                  radius: 10,
-                  child: Text(
-                    '2',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
+              if (cartState.totalItems > 0) ...[
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.red,
+                    radius: 10,
+                    child: Text(
+                      '${cartState.totalItems}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ],
           )
         ],

@@ -20,4 +20,8 @@ class CartState {
   }
 
   int get totalItems => cartItems.fold(0, (sum, item) => sum + item.quantity);
+
+  bool isInCart(String songId) {
+    return cartItems.any((item) => item.songId == songId);
+  }
 }

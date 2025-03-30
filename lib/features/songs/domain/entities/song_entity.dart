@@ -16,6 +16,27 @@ class SongEntity {
     this.imgURL,
     this.previewURL,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SongEntity &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          title == other.title &&
+          artist == other.artist &&
+          album == other.album &&
+          imgURL == other.imgURL &&
+          previewURL == other.previewURL;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      title.hashCode ^
+      artist.hashCode ^
+      album.hashCode ^
+      imgURL.hashCode ^
+      previewURL.hashCode;
 }
 
 extension SongModelExtensions on SongModel {

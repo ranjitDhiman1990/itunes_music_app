@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:itunes_music_app/features/cart/domain/entities/cart_entity.dart';
 
 class CartState {
@@ -24,4 +25,16 @@ class CartState {
   bool isInCart(String songId) {
     return cartItems.any((item) => item.songId == songId);
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CartState &&
+          runtimeType == other.runtimeType &&
+          // Compare list contents (order matters)
+          const ListEquality().equals(cartItems, other.cartItems) &&
+          isLoading == other.isLoading;
+
+  @override
+  int get hashCode => const ListEquality().hash(cartItems) ^ isLoading.hashCode;
 }

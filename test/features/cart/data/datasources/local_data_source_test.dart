@@ -1,144 +1,96 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:itunes_music_app/core/database/app_database.dart';
-import 'package:itunes_music_app/features/cart/data/datasources/local_data_source.dart';
-import 'package:itunes_music_app/features/cart/data/models/cart_model.dart';
-import 'package:mockito/mockito.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:itunes_music_app/features/songs/data/datasources/local_data_source.dart';
+import 'package:itunes_music_app/features/songs/data/models/song_model.dart';
+import 'package:mocktail/mocktail.dart';
 
-class MockAppDatabase extends Mock implements AppDatabase {}
-
-class MockDatabase extends Mock implements Database {}
+class MockLocalDataSource extends Mock implements LocalDataSource {}
 
 void main() {
-  late LocalDataSourceImpl localDataSource;
-  late MockAppDatabase mockAppDatabase;
-  late MockDatabase mockDatabase;
+  late MockLocalDataSource localDataSource;
+
+  final testSongs = [
+    SongModel(id: '1', title: 'Song One', artist: 'Artist A'),
+    SongModel(id: '2', title: 'Song Two', artist: 'Artist B'),
+  ];
 
   setUp(() {
-    mockAppDatabase = MockAppDatabase();
-    mockDatabase = MockDatabase();
-    localDataSource = LocalDataSourceImpl(appDatabase: mockAppDatabase);
-
-    // Stub the database getter to return our mock database
-    when(mockAppDatabase.database).thenAnswer((_) async => mockDatabase);
+    localDataSource = MockLocalDataSource();
   });
 
-  group('LocalDataSourceImpl', () {
-    const testSongId = '123';
-    const testSongId2 = '456';
-    final testCartItem = CartModel(songId: testSongId, quantity: 1);
-    final testCartItem2 = CartModel(songId: testSongId2, quantity: 2);
-    final testCartItems = [testCartItem, testCartItem2];
+  group('LocalDataSource', () {
+    group('getTopSongs', () {
+      test('should return list of SongModel when successful', () async {
+        // Arrange
+        when(() => localDataSource.getTopSongs())
+            .thenAnswer((_) async => testSongs);
 
-    test('getCartItems returns list of CartModel when database has items',
-        () async {
-      // Arrange
-      when(mockDatabase.query('cart')).thenAnswer((_) async => [
-            {'songId': testSongId, 'quantity': 1},
-            {'songId': testSongId2, 'quantity': 2},
-          ]);
+        // Act
+        final result = await localDataSource.getTopSongs();
 
-      // Act
-      final result = await localDataSource.getCartItems();
+        // Assert
+        expect(result, equals(testSongs));
+        verify(() => localDataSource.getTopSongs()).called(1);
+      });
 
-      // Assert
-      expect(result, equals(testCartItems));
-      verify(mockDatabase.query('cart'));
+      test('should return empty list when no songs available', () async {
+        // Arrange
+        when(() => localDataSource.getTopSongs()).thenAnswer((_) async => []);
+
+        // Act
+        final result = await localDataSource.getTopSongs();
+
+        // Assert
+        expect(result, isEmpty);
+        verify(() => localDataSource.getTopSongs()).called(1);
+      });
+
+      test('should propagate errors', () async {
+        // Arrange
+        when(() => localDataSource.getTopSongs())
+            .thenThrow(Exception('Database error'));
+
+        // Act & Assert
+        expect(() => localDataSource.getTopSongs(), throwsException);
+        verify(() => localDataSource.getTopSongs()).called(1);
+      });
     });
 
-    test('getCartItems returns empty list when database is empty', () async {
-      // Arrange
-      when(mockDatabase.query('cart')).thenAnswer((_) async => []);
+    group('saveTopSongs', () {
+      test('should complete successfully when saving songs', () async {
+        // Arrange
+        when(() => localDataSource.saveTopSongs(any()))
+            .thenAnswer((_) async {});
 
-      // Act
-      final result = await localDataSource.getCartItems();
+        // Act
+        await localDataSource.saveTopSongs(testSongs);
 
-      // Assert
-      expect(result, isEmpty);
-      verify(mockDatabase.query('cart'));
-    });
+        // Assert
+        verify(() => localDataSource.saveTopSongs(testSongs)).called(1);
+      });
 
-    test('addToCart inserts item into database', () async {
-      // Arrange
-      when(mockDatabase.insert(
-        'cart',
-        {
-          'songId': testSongId,
-          'quantity': 1,
-        },
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      )).thenAnswer((_) async => 1);
+      test('should handle empty list input', () async {
+        // Arrange
+        when(() => localDataSource.saveTopSongs(any()))
+            .thenAnswer((_) async {});
 
-      // Act
-      await localDataSource.addToCart(testSongId);
+        // Act
+        await localDataSource.saveTopSongs([]);
 
-      // Assert
-      verify(mockDatabase.insert(
-        'cart',
-        {
-          'songId': testSongId,
-          'quantity': 1,
-        },
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      ));
-    });
+        // Assert
+        verify(() => localDataSource.saveTopSongs([])).called(1);
+      });
 
-    test('removeFromCart deletes item from database', () async {
-      // Arrange
-      when(mockDatabase.delete('cart',
-          where: 'songId = ?',
-          whereArgs: [testSongId])).thenAnswer((_) async => 1);
+      test('should propagate errors', () async {
+        // Arrange
+        when(() => localDataSource.saveTopSongs(any()))
+            .thenThrow(Exception('Storage full'));
 
-      // Act
-      await localDataSource.removeFromCart(testSongId);
-
-      // Assert
-      verify(mockDatabase.delete(
-        'cart',
-        where: 'songId = ?',
-        whereArgs: [testSongId],
-      ));
-    });
-
-    test('updateCartItemQuantity updates quantity in database', () async {
-      // Arrange
-      const newQuantity = 3;
-      when(mockDatabase.update(
-        'cart',
-        {'quantity': newQuantity},
-        where: 'songId = ?',
-        whereArgs: [testSongId],
-      )).thenAnswer((_) async => 1);
-
-      // Act
-      await localDataSource.updateCartItemQuantity(testSongId, newQuantity);
-
-      // Assert
-      verify(mockDatabase.update(
-        'cart',
-        {'quantity': newQuantity},
-        where: 'songId = ?',
-        whereArgs: [testSongId],
-      ));
-    });
-
-    test('clearCart deletes all items from database', () async {
-      // Arrange
-      when(mockDatabase.delete('cart')).thenAnswer((_) async => 2);
-
-      // Act
-      await localDataSource.clearCart();
-
-      // Assert
-      verify(mockDatabase.delete('cart'));
-    });
-
-    test('throws exception when database operations fail', () async {
-      // Arrange
-      when(mockDatabase.query('cart')).thenThrow(Exception('Database error'));
-
-      // Act & Assert
-      expect(() => localDataSource.getCartItems(), throwsException);
+        // Act & Assert
+        expect(
+          () => localDataSource.saveTopSongs(testSongs),
+          throwsException,
+        );
+      });
     });
   });
 }

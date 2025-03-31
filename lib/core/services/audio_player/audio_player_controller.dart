@@ -6,6 +6,14 @@ import 'package:itunes_music_app/core/providers/providers.dart';
 import 'package:itunes_music_app/core/services/notification_service/notification_service.dart';
 import 'package:itunes_music_app/core/services/notification_service/permission_utils.dart';
 
+AudioPlayerController? _globalAudioController;
+
+void setGlobalAudioController(AudioPlayerController controller) {
+  _globalAudioController = controller;
+}
+
+AudioPlayerController? get globalAudioController => _globalAudioController;
+
 class AudioPlayerController {
   final AudioPlayer _player = AudioPlayer();
   final Ref ref;

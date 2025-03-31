@@ -1,59 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:itunes_music_app/core/services/audio_player/audio_player_controller.dart';
 import 'package:itunes_music_app/core/services/notification_service/permission_utils.dart';
 
 @pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse response) {
+void notificationTapBackground(ReceivedAction receivedAction) {
   // This runs when app is in background/terminated
-  // You might want to save the action and handle when app resumes
-  debugPrint('Background notification action: ${response.actionId}');
+  debugPrint(
+      'Background notification action: ${receivedAction.buttonKeyPressed}');
+  debugPrint('Notification payload: ${receivedAction.payload}');
 }
 
 class NotificationService {
-  static final _notifications = FlutterLocalNotificationsPlugin();
-
   static Future<void> initialize() async {
     final hasPermission =
         await AppPermissions.checkAndRequestNotificationPermission();
     if (!hasPermission) return;
 
-    await _notifications
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(
-          const AndroidNotificationChannel(
-            'music_controls',
-            'Music Controls',
-            description: 'Media playback controls',
-            importance: Importance.low,
-            enableVibration: false,
-            playSound: false,
-          ),
-        );
+    await AwesomeNotifications().initialize(
+      null, // Use default app icon if null
+      [
+        NotificationChannel(
+          channelKey: 'music_controls',
+          channelName: 'Music Controls',
+          channelDescription: 'Media playback controls',
+          importance: NotificationImportance.Low,
+          playSound: false,
+          enableVibration: false,
+          channelShowBadge: false,
+        )
+      ],
+      debug: true,
+    );
 
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_notification');
-
-    const InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
-
-    await _notifications.initialize(
-      initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) {
-        _handleNotificationResponse(response);
-      },
-      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
+    // Set up notification action handlers
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: _handleNotificationResponse,
+      onNotificationCreatedMethod: _onNotificationCreated,
+      onNotificationDisplayedMethod: _onNotificationDisplayed,
+      onDismissActionReceivedMethod: _onDismissActionReceived,
     );
   }
 
-  static void _handleNotificationResponse(NotificationResponse response) {
-    debugPrint('Notification action triggered: ${response.actionId}');
-    debugPrint('Notification payload: ${response.payload}');
-    final action = response.actionId;
-    if (action == 'play') {
-      // Handle play action
-    } else if (action == 'pause') {
-      // Handle pause action
+  static Future<void> _onNotificationCreated(
+      ReceivedNotification notification) async {
+    debugPrint('Notification created: ${notification.id}');
+  }
+
+  static Future<void> _onNotificationDisplayed(
+      ReceivedNotification notification) async {
+    debugPrint('Notification displayed: ${notification.id}');
+  }
+
+  static Future<void> _onDismissActionReceived(ReceivedAction action) async {
+    debugPrint('Notification dismissed: ${action.id}');
+  }
+
+  static Future<void> _handleNotificationResponse(ReceivedAction action) async {
+    final controller = globalAudioController;
+    final actionKey = action.buttonKeyPressed;
+    if (actionKey == 'play') {
+      controller?.resume();
+    } else if (actionKey == 'pause') {
+      controller?.pause();
     }
   }
 
@@ -61,40 +70,37 @@ class NotificationService {
     required String title,
     required bool isPlaying,
   }) async {
-    const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'music_controls',
-      'Music Controls',
-      channelDescription: 'Media playback controls',
-      importance: Importance.low,
-      priority: Priority.low,
-      playSound: false,
-      enableVibration: false,
-      ongoing: true,
-      autoCancel: false,
-      visibility: NotificationVisibility.public,
-      actions: [
-        AndroidNotificationAction(
-          'pause',
-          'Pause',
-          icon: DrawableResourceAndroidBitmap('ic_pause'),
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 0,
+        channelKey: 'music_controls',
+        title: title,
+        body: 'Now Playing',
+        payload: {'media': 'music'},
+        notificationLayout: NotificationLayout.Default,
+        criticalAlert: true,
+        locked: true,
+      ),
+      actionButtons: [
+        NotificationActionButton(
+          key: 'pause',
+          label: 'Pause',
+          icon: 'resource://drawable/ic_pause',
         ),
-        AndroidNotificationAction(
-          'play',
-          'Play',
-          icon: DrawableResourceAndroidBitmap('ic_play'),
+        NotificationActionButton(
+          key: 'play',
+          label: 'Play',
+          icon: 'resource://drawable/ic_play',
         ),
       ],
-    );
-
-    await _notifications.show(
-      0,
-      title,
-      'Now Playing',
-      const NotificationDetails(android: androidPlatformChannelSpecifics),
     );
   }
 
   static Future<void> cancel() async {
-    await _notifications.cancel(0);
+    await AwesomeNotifications().cancel(0);
+  }
+
+  static Future<void> dispose() async {
+    await AwesomeNotifications().dispose();
   }
 }

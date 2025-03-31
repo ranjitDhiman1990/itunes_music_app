@@ -26,27 +26,27 @@ A Flutter application that fetches and displays top songs from iTunes with cart 
 ## Technical Architecture �
 
 ### Clean Architecture Structure
-
-lib/
-├── app/ # App configuration
-├── core/ # Shared components
-│ ├── constants/ # App constants
-│ ├── database/ # Database operations
-│ ├── error/ # Error handling
-│ ├── network/ # API clients
-│ ├── providers/ # Global providers
-│ ├── services/ # Business services
-│ └── utils/ # Utilities
-└── features/ # Feature modules
-├── cart/ # Cart feature
-│ ├── data/ # Data layer
-│ ├── domain/ # Domain layer
-│ └── presentation/ # UI layer
-└── songs/ # Songs feature
-├── data/
-├── domain/
-└── presentation/
-
+  ```bash
+  lib/
+  ├── app/ # App configuration
+  ├── core/ # Shared components
+  │ ├── constants/ # App constants
+  │ ├── database/ # Database operations
+  │ ├── error/ # Error handling
+  │ ├── network/ # API clients
+  │ ├── providers/ # Global providers
+  │ ├── services/ # Business services
+  │ └── utils/ # Utilities
+  └── features/ # Feature modules
+  ├── cart/ # Cart feature
+  │ ├── data/ # Data layer
+  │ ├── domain/ # Domain layer
+  │ └── presentation/ # UI layer
+  └── songs/ # Songs feature
+  ├── data/
+  ├── domain/
+  └── presentation/
+  ```
 
 ### Tech Stack
 - **State Management**: Riverpod (v2.6.1)

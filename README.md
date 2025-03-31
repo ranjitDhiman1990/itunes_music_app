@@ -6,17 +6,17 @@ A Flutter application that fetches and displays top songs from iTunes with cart 
 
 ## iOS Screenshots
 
-!(https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/iOS/iOS_1.png)
-!(https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/iOS/iOS_2.png)
-!(https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/iOS/iOS_3.png)
-!(https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/iOS/iOS_4.png)
+![Screen1](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/iOS/iOS_1.png)
+![Screen2](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/iOS/iOS_2.png)
+![Screen3](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/iOS/iOS_3.png)
+![Screen4](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/iOS/iOS_4.png)
 
 ## Android Screenshots
 
-!(https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/android/android_1.png)
-!(https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/android/android_2.png)
-!(https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/android/android_3.png)
-!(https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/android/android_4.png)
+![Screen1](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/android/android_1.png)
+![Screen2](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/android/android_2.png)
+![Screen3](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/android/android_3.png)
+![Screen4](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/screenshots/android/android_4.png)
 
 ## Features ✨
 
@@ -41,27 +41,28 @@ A Flutter application that fetches and displays top songs from iTunes with cart 
 ## Technical Architecture �
 
 ### Clean Architecture Structure
-  ```bash
-  lib/
-  ├── app/ # App configuration
-  ├── core/ # Shared components
-  │ ├── constants/ # App constants
-  │ ├── database/ # Database operations
-  │ ├── error/ # Error handling
-  │ ├── network/ # API clients
-  │ ├── providers/ # Global providers
-  │ ├── services/ # Business services
-  │ └── utils/ # Utilities
-  └── features/ # Feature modules
-  ├── cart/ # Cart feature
-  │ ├── data/ # Data layer
-  │ ├── domain/ # Domain layer
-  │ └── presentation/ # UI layer
-  └── songs/ # Songs feature
-  ├── data/
-  ├── domain/
-  └── presentation/
-  ```
+
+```bash
+lib/
+├── app/ # App configuration
+├── core/ # Shared components
+│ ├── constants/ # App constants
+│ ├── database/ # Database operations
+│ ├── error/ # Error handling
+│ ├── network/ # API clients
+│ ├── providers/ # Global providers
+│ ├── services/ # Business services
+│ └── utils/ # Utilities
+└── features/ # Feature modules
+├── cart/ # Cart feature
+│ ├── data/ # Data layer
+│ ├── domain/ # Domain layer
+│ └── presentation/ # UI layer
+└── songs/ # Songs feature
+├── data/
+├── domain/
+└── presentation/
+```
 
 ### Tech Stack
 
@@ -116,19 +117,20 @@ A Flutter application that fetches and displays top songs from iTunes with cart 
 ### Dependencies 📦
 
 - **Main Dependencies**:
-- Package Version Purpose
-- flutter_riverpod ^2.6.1 State management
-- http ^1.3.0 API calls
-- sqflite ^2.4.2 Local database
-- audioplayers ^6.4.0 Audio playback
-- cached_network_image ^3.4.1 Image caching
+
+  ```bash
+  - Package Version                   Purpose
+  - flutter_riverpod ^2.6.1       State management
+  - http ^1.3.0                   API calls
+  - sqflite ^2.4.2                Local database
+  - audioplayers ^6.4.0           Audio playback
+  - cached_network_image ^3.4.1   Image caching
+  ```
 
 - **Dev Dependencies**:
-- Package Version Purpose
-- mockito ^5.4.5 Mocking for tests
-- mocktail ^1.0.4 Alternative mocking
-- build_runner ^2.4.15 Code generation
-
-```
-
-```
+  ```bash
+  - Package Version                   Purpose
+  - mockito ^5.4.5                Mocking for tests
+  - mocktail ^1.0.4               Alternative mocking
+  - build_runner ^2.4.15          Code generation
+  ```

@@ -42,7 +42,7 @@ A Flutter application that fetches and displays top songs from iTunes with cart 
   - Quantity adjustment
   - Checkout summary dialog
 
-## Technical Architecture �
+## Technical Architecture 🏛️
 
 ### Clean Architecture Structure
 

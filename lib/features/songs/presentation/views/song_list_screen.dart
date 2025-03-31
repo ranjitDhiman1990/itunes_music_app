@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itunes_music_app/app/routes.dart';
+import 'package:itunes_music_app/core/utils/network_status_widget.dart';
 import 'package:itunes_music_app/features/cart/presentation/view_models/cart_view_model.dart';
 import 'package:itunes_music_app/features/songs/presentation/view_models/song_view_model.dart';
 import 'package:itunes_music_app/features/songs/presentation/views/widgets/song_item.dart';
@@ -17,32 +18,36 @@ class SongListScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Songs List'),
         actions: [
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.cart);
-                },
-                icon: const Icon(Icons.shopping_cart),
-              ),
-              if (cartState.totalItems > 0) ...[
-                Positioned(
-                  right: 8,
-                  top: 8,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.red,
-                    radius: 10,
-                    child: Text(
-                      '${cartState.totalItems}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
+          GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => Navigator.pushNamed(context, AppRoutes.cart),
+            child: Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.cart);
+                  },
+                  icon: const Icon(Icons.shopping_cart),
+                ),
+                if (cartState.totalItems > 0) ...[
+                  Positioned(
+                    right: 8,
+                    top: 8,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.red,
+                      radius: 10,
+                      child: Text(
+                        '${cartState.totalItems}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ],
-            ],
+            ),
           )
         ],
       ),
@@ -70,6 +75,7 @@ class SongListScreen extends ConsumerWidget {
                     );
                   },
                 ),
+      bottomNavigationBar: const NetworkStatusWidget(),
     );
   }
 }

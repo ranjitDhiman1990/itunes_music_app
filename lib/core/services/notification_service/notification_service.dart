@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:itunes_music_app/core/services/notification_service/permission_utils.dart';
-import 'package:itunes_music_app/main.dart';
+
+@pragma('vm:entry-point')
+void notificationTapBackground(NotificationResponse response) {
+  // This runs when app is in background/terminated
+  // You might want to save the action and handle when app resumes
+  debugPrint('Background notification action: ${response.actionId}');
+}
 
 class NotificationService {
   static final _notifications = FlutterLocalNotificationsPlugin();

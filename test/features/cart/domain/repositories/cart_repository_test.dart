@@ -22,24 +22,19 @@ void main() {
 
   group('CartRepository', () {
     test('getCartItems() should return list of CartEntity', () async {
-      // Arrange
       when(mockCartRepository.getCartItems())
           .thenAnswer((_) async => testCartItems);
 
-      // Act
       final result = await mockCartRepository.getCartItems();
 
-      // Assert
       expect(result, isA<List<CartEntity>>());
       expect(result.length, testCartItems.length);
       verify(mockCartRepository.getCartItems()).called(1);
     });
 
     test('addToCart() should complete without error when successful', () async {
-      // Arrange
       when(mockCartRepository.addToCart(testSongId)).thenAnswer((_) async {});
 
-      // Act & Assert
       expect(() async => await mockCartRepository.addToCart(testSongId),
           returnsNormally);
       verify(mockCartRepository.addToCart(testSongId)).called(1);
@@ -47,11 +42,9 @@ void main() {
 
     test('removeFromCart() should complete without error when successful',
         () async {
-      // Arrange
       when(mockCartRepository.removeFromCart(testSongId))
           .thenAnswer((_) async {});
 
-      // Act & Assert
       expect(() async => await mockCartRepository.removeFromCart(testSongId),
           returnsNormally);
       verify(mockCartRepository.removeFromCart(testSongId)).called(1);
@@ -60,11 +53,9 @@ void main() {
     test(
         'updateCartItemQuantity() should complete without error when successful',
         () async {
-      // Arrange
       when(mockCartRepository.updateCartItemQuantity(testSongId, testQuantity))
           .thenAnswer((_) async {});
 
-      // Act & Assert
       expect(
           () async => await mockCartRepository.updateCartItemQuantity(
               testSongId, testQuantity),
@@ -75,29 +66,23 @@ void main() {
     });
 
     test('clearCart() should complete without error when successful', () async {
-      // Arrange
       when(mockCartRepository.clearCart()).thenAnswer((_) async {});
 
-      // Act & Assert
       expect(() async => await mockCartRepository.clearCart(), returnsNormally);
       verify(mockCartRepository.clearCart()).called(1);
     });
 
     test('getCartItems() should throw exception when failed', () async {
-      // Arrange
       when(mockCartRepository.getCartItems())
           .thenThrow(Exception('Failed to load cart'));
 
-      // Act & Assert
       expect(() => mockCartRepository.getCartItems(), throwsException);
     });
 
     test('addToCart() should throw exception when failed', () async {
-      // Arrange
       when(mockCartRepository.addToCart(testSongId))
           .thenThrow(Exception('Failed to add item'));
 
-      // Act & Assert
       expect(() => mockCartRepository.addToCart(testSongId), throwsException);
     });
   });

@@ -23,12 +23,7 @@ void main() {
         )),
       ),
     );
-
-    // Verify UI elements
+    
     expect(find.text('Test Song'), findsOneWidget);
-    // expect(find.text('Test Artist'), findsOneWidget);
-    // expect(find.text('Album: Test Album'), findsOneWidget);
-    // expect(find.byType(ElevatedButton),
-    //     findsWidgets); // At least two buttons (Cart & Play/Pause)
   });
 }

@@ -5,10 +5,7 @@ import 'package:itunes_music_app/features/songs/domain/entities/song_entity.dart
 void main() {
   group('SongEntity', () {
     test('should create entity with required fields only', () {
-      // Arrange & Act
       final entity = SongEntity(id: '123');
-
-      // Assert
       expect(entity.id, '123');
       expect(entity.title, isNull);
       expect(entity.artist, isNull);
@@ -18,7 +15,6 @@ void main() {
     });
 
     test('should create entity with all fields', () {
-      // Arrange & Act
       final entity = SongEntity(
         id: '456',
         title: 'Test Song',
@@ -28,7 +24,7 @@ void main() {
         previewURL: 'https://test.com/preview.mp3',
       );
 
-      // Assert
+      
       expect(entity.id, '456');
       expect(entity.title, 'Test Song');
       expect(entity.artist, 'Test Artist');
@@ -38,7 +34,6 @@ void main() {
     });
 
     test('should be equal when properties are same', () {
-      // Arrange
       final entity1 = SongEntity(
         id: '789',
         title: 'Same Song',
@@ -50,23 +45,19 @@ void main() {
         artist: 'Same Artist',
       );
 
-      // Act & Assert
       expect(entity1, equals(entity2));
     });
 
     test('should not be equal when properties differ', () {
-      // Arrange
       final entity1 = SongEntity(id: '111');
       final entity2 = SongEntity(id: '222');
 
-      // Act & Assert
       expect(entity1, isNot(equals(entity2)));
     });
   });
 
   group('SongModelExtensions', () {
     test('should convert SongModel to SongEntity with all fields', () {
-      // Arrange
       final model = SongModel(
         id: 'model1',
         title: 'Model Song',
@@ -76,10 +67,8 @@ void main() {
         previewURL: 'https://model.com/preview.mp3',
       );
 
-      // Act
       final entity = model.toEntity();
 
-      // Assert
       expect(entity.id, 'model1');
       expect(entity.title, 'Model Song');
       expect(entity.artist, 'Model Artist');
@@ -89,7 +78,6 @@ void main() {
     });
 
     test('should convert SongModel with null fields to SongEntity', () {
-      // Arrange
       final model = SongModel(
         id: 'model2',
         title: null,
@@ -99,10 +87,8 @@ void main() {
         previewURL: null,
       );
 
-      // Act
       final entity = model.toEntity();
 
-      // Assert
       expect(entity.id, 'model2');
       expect(entity.title, isNull);
       expect(entity.artist, isNull);
@@ -112,7 +98,6 @@ void main() {
     });
 
     test('should maintain equality when converting identical models', () {
-      // Arrange
       final model1 = SongModel(
         id: 'same',
         title: 'Same Title',
@@ -124,11 +109,8 @@ void main() {
         artist: 'Same Artist',
       );
 
-      // Act
       final entity1 = model1.toEntity();
       final entity2 = model2.toEntity();
-
-      // Assert
       expect(entity1, equals(entity2));
     });
   });

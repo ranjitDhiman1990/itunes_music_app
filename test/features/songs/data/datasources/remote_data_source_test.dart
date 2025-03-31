@@ -34,24 +34,19 @@ void main() {
   ];
 
   test('Fetch Top Songs', () async {
-    // Arrange
     when(mockRemoteDataSource.getTopSongs())
         .thenAnswer((_) async => testTopSongs);
 
-    // Act
     final result = await mockRemoteDataSource.getTopSongs();
 
-    // Assert
     expect(result, testTopSongs);
     verify(mockRemoteDataSource.getTopSongs()).called(1);
   });
 
   test('Failed to Fetch Top Songs', () async {
-    // Arrange
     const errorMessage = 'Failed to load songs';
     when(mockRemoteDataSource.getTopSongs()).thenThrow(Exception(errorMessage));
 
-    // Act & Assert
     expect(() => mockRemoteDataSource.getTopSongs(), throwsA(isA<Exception>()));
     verify(mockRemoteDataSource.getTopSongs()).called(1);
   });

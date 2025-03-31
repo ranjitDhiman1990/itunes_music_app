@@ -32,14 +32,11 @@ void main() {
     });
 
     test('should set loading state when starting', () async {
-      // Arrange
       final completer = Completer<List<SongEntity>>();
       when(mockRepository.getTopSongs()).thenAnswer((_) => completer.future);
 
-      // Act
       final future = viewModel.loadSongs();
 
-      // Assert
       expect(viewModel.state.isLoading, true);
 
       // Cleanup
@@ -48,13 +45,10 @@ void main() {
     });
 
     test('should update state with songs on successful load', () async {
-      // Arrange
       when(mockRepository.getTopSongs()).thenAnswer((_) async => testSongs);
 
-      // Act
       await viewModel.loadSongs();
 
-      // Assert
       expect(viewModel.state.isLoading, false);
       expect(viewModel.state.error, isNull);
       expect(viewModel.state.songs, testSongs);
@@ -62,26 +56,20 @@ void main() {
     });
 
     test('should handle empty song list from repository', () async {
-      // Arrange
       when(mockRepository.getTopSongs()).thenAnswer((_) async => []);
 
-      // Act
       await viewModel.loadSongs();
 
-      // Assert
       expect(viewModel.state.isLoading, false);
       expect(viewModel.state.songs, isEmpty);
     });
 
     test('should set error state when repository throws exception', () async {
-      // Arrange
       const errorMessage = 'Failed to load songs';
       when(mockRepository.getTopSongs()).thenThrow(Exception(errorMessage));
 
-      // Act
       await viewModel.loadSongs();
 
-      // Assert
       expect(viewModel.state.isLoading, false);
       expect(viewModel.state.error, contains(errorMessage));
       expect(viewModel.state.songs, isEmpty);

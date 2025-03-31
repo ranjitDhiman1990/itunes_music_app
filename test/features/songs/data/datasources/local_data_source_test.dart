@@ -46,7 +46,6 @@ void main() {
   group('getTopSongs', () {
     test('should return list of songs when database query is successful',
         () async {
-      // Arrange
       final mockMaps = [
         {
           'id': '1',
@@ -70,10 +69,8 @@ void main() {
 
       when(mockDatabase.query('top_songs')).thenAnswer((_) async => mockMaps);
 
-      // Act
       final result = await localDataSource.getTopSongs();
 
-      // Assert
       expect(result, isA<List<SongModel>>());
       expect(result.length, 2);
       expect(result[0].title, 'Test Song 1');
@@ -82,37 +79,29 @@ void main() {
     });
 
     test('should return empty list when no songs exist in database', () async {
-      // Arrange
       when(mockDatabase.query('top_songs')).thenAnswer((_) async => []);
 
-      // Act
       final result = await localDataSource.getTopSongs();
 
-      // Assert
       expect(result, isEmpty);
       verify(mockDatabase.query('top_songs')).called(1);
     });
 
     test('should throw exception when database query fails', () async {
-      // Arrange
       when(mockDatabase.query('top_songs'))
           .thenThrow(Exception('Database error'));
 
-      // Act & Assert
       expect(() => localDataSource.getTopSongs(), throwsException);
     });
   });
 
   group('saveTopSongs', () {
     test('should save songs using batch operation', () async {
-      // Arrange
       when(mockDatabase.batch()).thenReturn(mockBatch);
       when(mockBatch.commit()).thenAnswer((_) async => []);
 
-      // Act
       await localDataSource.saveTopSongs(testSongs);
 
-      // Assert
       verify(mockDatabase.batch()).called(1);
       verify(mockBatch.insert(
         'top_songs',
@@ -129,23 +118,18 @@ void main() {
     });
 
     test('should throw exception when batch commit fails', () async {
-      // Arrange
       when(mockDatabase.batch()).thenReturn(mockBatch);
       when(mockBatch.commit()).thenThrow(Exception('Commit failed'));
 
-      // Act & Assert
       expect(() => localDataSource.saveTopSongs(testSongs), throwsException);
     });
 
     test('should handle empty list without errors', () async {
-      // Arrange
       when(mockDatabase.batch()).thenReturn(mockBatch);
       when(mockBatch.commit()).thenAnswer((_) async => []);
 
-      // Act
       await localDataSource.saveTopSongs([]);
 
-      // Assert
       verify(mockDatabase.batch()).called(1);
       verify(mockBatch.commit()).called(1);
       verifyNoMoreInteractions(mockBatch);

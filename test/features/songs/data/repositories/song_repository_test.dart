@@ -45,14 +45,11 @@ void main() {
 
   group('getTopSongs', () {
     test('should return local songs when local data source has data', () async {
-      // Arrange
       when(mockLocalDataSource.getTopSongs())
           .thenAnswer((_) async => testSongModels);
 
-      // Act
       final result = await repository.getTopSongs();
 
-      // Assert
       expect(result, testSongEntities);
       verify(mockLocalDataSource.getTopSongs());
       verifyNever(mockRemoteDataSource.getTopSongs());
@@ -61,7 +58,6 @@ void main() {
 
     test('should fetch from remote and save to local when local is empty',
         () async {
-      // Arrange
       when(mockLocalDataSource.getTopSongs()).thenAnswer((_) async => []);
       when(mockRemoteDataSource.getTopSongs())
           .thenAnswer((_) async => testSongModels);
@@ -69,10 +65,8 @@ void main() {
       when(mockLocalDataSource.getTopSongs())
           .thenAnswer((_) async => testSongModels);
 
-      // Act
       final result = await repository.getTopSongs();
 
-      // Assert
       expect(result, testSongEntities);
       verify(mockLocalDataSource.getTopSongs()).called(2);
       verify(mockRemoteDataSource.getTopSongs());
@@ -80,13 +74,11 @@ void main() {
     });
 
     test('should throw error when both local and remote fail', () async {
-      // Arrange
       when(mockLocalDataSource.getTopSongs())
           .thenThrow(Exception('Local error'));
       when(mockRemoteDataSource.getTopSongs())
           .thenThrow(Exception('Remote error'));
 
-      // Act & Assert
       expect(() => repository.getTopSongs(), throwsA(isA<String>()));
       verify(mockLocalDataSource.getTopSongs());
       verify(mockRemoteDataSource.getTopSongs());
@@ -95,7 +87,6 @@ void main() {
 
     test('should return remote songs and save to local when local is empty',
         () async {
-      // Arrange
       when(mockLocalDataSource.getTopSongs()).thenAnswer((_) async => []);
       when(mockRemoteDataSource.getTopSongs())
           .thenAnswer((_) async => testSongModels);
@@ -104,10 +95,8 @@ void main() {
       when(mockLocalDataSource.getTopSongs())
           .thenAnswer((_) async => testSongModels);
 
-      // Act
       final result = await repository.getTopSongs();
 
-      // Assert
       expect(result, testSongEntities);
       verify(mockLocalDataSource.getTopSongs()).called(2);
       verify(mockRemoteDataSource.getTopSongs());
@@ -117,12 +106,10 @@ void main() {
     test(
         'should handle error from remote and return empty list if local is empty',
         () async {
-      // Arrange
       when(mockLocalDataSource.getTopSongs()).thenAnswer((_) async => []);
       when(mockRemoteDataSource.getTopSongs())
           .thenThrow(Exception('Remote error'));
 
-      // Act & Assert
       expect(() => repository.getTopSongs(), throwsA(isA<String>()));
       verify(mockLocalDataSource.getTopSongs());
       verify(mockRemoteDataSource.getTopSongs());

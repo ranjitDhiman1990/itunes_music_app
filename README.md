@@ -4,19 +4,23 @@ A Flutter application that fetches and displays top songs from iTunes with cart 
 
 ## 📱 App Screenshots
 
-## iOS Screenshots
+### iOS Screenshots
 
-![Screen1](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/iOS/iOS_1.png)
-![Screen2](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/iOS/iOS_2.png)
-![Screen3](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/iOS/iOS_3.png)
-![Screen4](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/iOS/iOS_4.png)
+<p float="left">
+  <img src="https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/iOS/iOS_1.png" width="250" height="500">
+  <img src="https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/iOS/iOS_2.png" width="250" height="500">
+  <img src="https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/iOS/iOS_3.png" width="250" height="500">
+  <img src="https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/iOS/iOS_4.png" width="250" height="500">
+</p>
 
-## Android Screenshots
+### Android Screenshots
 
-![Screen1](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/android/android_1.png)
-![Screen2](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/android/android_2.png)
-![Screen3](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/android/android_3.png)
-![Screen4](https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/android/android_4.png)
+<p float="left">
+  <img src="https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/android/android_1.png" width="250" height="500">
+  <img src="https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/android/android_2.png" width="250" height="500">
+  <img src="https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/android/android_3.png" width="250" height="500">
+  <img src="https://raw.githubusercontent.com/ranjitDhiman1990/itunes_music_app/main/screenshots/android/android_4.png" width="250" height="500">
+</p>
 
 ## Features ✨
 

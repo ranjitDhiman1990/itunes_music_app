@@ -17,8 +17,7 @@ class CartUtils {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Item in Cart'),
-        content:
-            Text('"${song.title}" already has ${item.quantity} in cart.'),
+        content: Text('"${song.title}" already has ${item.quantity} in cart.'),
         actions: [
           TextButton(
             child: const Text('Cancel'),

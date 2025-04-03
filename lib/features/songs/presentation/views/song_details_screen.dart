@@ -36,7 +36,7 @@ class _SongDetailsScreenState extends ConsumerState<SongDetailsScreen> {
       appBar: AppBar(
         title: Text(song.title ?? ''),
       ),
-      body: _SongDetailsView(
+      body: SongDetailsView(
         song: song,
         controller: _controller,
       ),
@@ -44,8 +44,9 @@ class _SongDetailsScreenState extends ConsumerState<SongDetailsScreen> {
   }
 }
 
-class _SongDetailsView extends StatelessWidget {
-  const _SongDetailsView({
+class SongDetailsView extends StatelessWidget {
+  const SongDetailsView({
+    super.key,
     required this.song,
     required this.controller,
   });
